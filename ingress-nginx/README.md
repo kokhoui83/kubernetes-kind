@@ -12,4 +12,5 @@ kubectl wait --namespace ingress-nginx \
   --timeout=90s
 ```
 - Reference
-https://kind.sigs.k8s.io/docs/user/ingress/
+    - https://kind.sigs.k8s.io/docs/user/ingress/
+    - https://kubernetes.github.io/ingress-nginx/deploy/
