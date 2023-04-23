@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nginx-redirect-ingressroute
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`k3s-node-01.local`) && PathPrefix(`/nginx`)
+      kind: Rule
+      services:
+        - name: nginx-service
+          port: 80
+      middlewares:
+        - name: nginx-stripprefix
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: nginx-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /nginx
