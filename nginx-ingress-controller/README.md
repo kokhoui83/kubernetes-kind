@@ -2,5 +2,13 @@
 
 ## Install
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f deployment.yaml
 ```
+
+## Uninstall
+```
+kubectl delete -f deployment.yaml
+```
+
+## Reference
+- https://kubernetes.github.io/ingress-nginx/deploy/
