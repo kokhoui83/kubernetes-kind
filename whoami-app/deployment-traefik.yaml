@@ -43,7 +43,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`k3s-node-01.local`) && PathPrefix(`/whoami`)
+    - match: PathPrefix(`/whoami`)
       kind: Rule
       services:
         - name: whoami-service
